@@ -568,7 +568,6 @@ def sudoku_generate(size, nb_clues=False):
 
         # 1. Generate a complete solution using backtracking that fills the sudoku
         sudoku = fill_grid(sudoku, size)
-        sudoku_print(sys.stdout, sudoku)
 
         # 2. Remove some values from the sudoku one by one and check if the sudoku still has a unique solution
         #   a. If the sudoku has a unique solution, continue removing values
