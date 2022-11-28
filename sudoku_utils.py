@@ -68,7 +68,6 @@ def newcomment(s, myfile):
 
 def save_sudoku(sudoku, name, size):
     if sudoku == []:
-        print("It is not possible to solve the sudoku because it is empty.")
         return
     # Save sudoku to file and add vertical separators
     with open(name + ".txt", "w") as file:
@@ -99,15 +98,27 @@ def has_unique_solution(sudoku, size):
     N = len(sudoku)
     myfile = open("sudoku.cnf", "w")
     # Notice that this may not be correct for N > 9 # TODO
-    myfile.write(
-        "p cnf "
-        + str(N)
-        + str(N)
-        + str(N)
-        + " "
-        + str(sudoku_constraints_number(sudoku))
-        + "\n"
-    )
+    if N == 4 or N == 9:
+        myfile.write(
+            "p cnf "
+            + str(N)
+            + str(N)
+            + str(N)
+            + " "
+            + str(sudoku_constraints_number(sudoku))
+            + "\n"
+        )
+    elif N == 16 or N == 25:
+        myfile.write(
+            "p cnf "
+            + str(N + 10)
+            + str(N + 10)
+            + str(N + 10)
+            + " "
+            + str(sudoku_constraints_number(sudoku))
+            + "\n"
+        )
+
     sudoku_generic_constraints(myfile, N)
     sudoku_specific_constraints(myfile, sudoku)
     myfile.close()
@@ -171,11 +182,10 @@ def fill_grid(sudoku, size):
     Args:
         sudoku (List[List]): A sudoku grid to be filled
         size (int): The size of the sudoku
-        file (file): The file to write the cnf file to
+
     Returns:
         sudoku (List[List]): A filled sudoku grid.
     """
-    print("Filling grid...")
 
     # Initially, all cells are empty
     free_cells = [(i, j) for i in range(size) for j in range(size)]
@@ -274,16 +284,12 @@ def remove_values(sudoku, size, clues_limit):
 
     max_nb_clues = size - 1 if clues_limit else size**2
 
-    print("Removing values...")
-
     # Make a list of all cells positions and shuffle it
     cells = [(i, j) for i in range(size) for j in range(size)]
     cells = random.sample(cells, len(cells))
 
     if clues_limit:
-        print("Clues limit: " + str(max_nb_clues))
         while nb_clues(sudoku, size) > max_nb_clues:
-            print("Number of remaining clues: " + str(nb_clues(sudoku, size)))
             row, col = cells.pop()
             value = sudoku[row][col]
             sudoku[row][col] = 0
@@ -513,7 +519,6 @@ def sudoku_solve(filename):
             line = line[2:]
             units = line.split()
             if units.pop() != "0":
-                print("Error: last unit is not 0")
                 exit("strange output from SAT solver:" + line + "\n")
             units = [int(x) for x in units if int(x) >= 0]
             N = len(units)
@@ -526,7 +531,6 @@ def sudoku_solve(filename):
             elif N == 625:
                 N = 25
             else:
-                print("Error: number of units is not 16, 81, 256 or 625")
                 exit("strange output from SAT solver:" + line + "\n")
             sudoku = [[0 for i in range(N)] for j in range(N)]
             # Notice that the following function only works for N = 4 or N = 9
@@ -551,7 +555,6 @@ def sudoku_solve(filename):
                     sudoku[i - 1][j - 1] = k
 
             return sudoku
-        print("Error: line does not start with c, s or v")
         exit("strange output from SAT solver:" + line + "\n")
         return []
 

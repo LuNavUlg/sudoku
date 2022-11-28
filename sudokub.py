@@ -112,7 +112,6 @@ elif mode == Mode.TEST_SOLVE:
         sudoku = sudoku_read(filename)
         N = len(sudoku)
         myfile = open("sudoku.cnf", "w")
-        # Notice that this may not be correct for N > 9
         myfile.write(
             "p cnf "
             + str(N)
@@ -164,7 +163,6 @@ elif mode == Mode.TEST_SOLVE:
         sudoku = sudoku_read(filename)
         N = len(sudoku)
         myfile = open("sudoku.cnf", "w")
-        # Notice that this may not be correct for N > 9
         myfile.write(
             "p cnf "
             + str(N + 10)
@@ -220,7 +218,6 @@ elif mode == Mode.TEST_SOLVE:
         sudoku = sudoku_read(filename)
         N = len(sudoku)
         myfile = open("sudoku.cnf", "w")
-        # Notice that this may not be correct for N > 9
         myfile.write(
             "p cnf "
             + str(N + 10)
@@ -259,17 +256,3 @@ elif mode == Mode.TEST_SOLVE:
         print("OK\n")
     else:
         print("\nNumber of false solutions for 25x25 sudokus: " + str(false))
-
-# Test creating a sudoku
-# print("Generate a 9x9 sudoku\n")
-# sudoku = Sudoku(9)
-# print("\nempty \n")
-# sudoku.print_sudoku()
-# sudoku = sudoku.generate()
-# print("\nintialized \n")
-# sudoku.print_sudoku()
-# print("\ndone \n")
-## Test visualizing sudoku
-# print("Generate visualization window\n")
-# sudoku_game = SudokuGame(sudoku)
-# print("\ndone\n")

@@ -88,8 +88,6 @@ def solveSudoku(sudoku, canvas, size):
 
     solution = sudoku_solve("sudoku.cnf")
 
-    print(solution)
-
     # Print the solution in the sudoku grid (if it exists)
     if solution is not None:
         for line in solution:
@@ -129,7 +127,6 @@ def solveSudokuDisp(file_name, solve_window, canvas):
     for i in range(N):
         # Draw thicker lines every [sqrt(N)] lines
         if i % (N**0.5) == 0:
-            print("i = ", i)
             canvas.create_line(0, size / N * i, size, size / N * i, width=3)
             canvas.create_line(size / N * i, 0, size / N * i, size, width=3)
         # Create the horizontal lines
@@ -257,7 +254,6 @@ def clickButton(action):
         ).pack()
 
         solve_window.mainloop()
-        print(file_name.get())
 
     elif action == "see":
         print("Seeing...")
@@ -320,7 +316,6 @@ def clickButton(action):
         ).pack()
 
         see_window.mainloop()
-        print(file_name.get())
 
     elif action == "create":
         global CREATED_SUDOKU
